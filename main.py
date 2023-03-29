@@ -19,16 +19,22 @@ frontmotor = Motor(Port.D)
 drill = Motor(Port.B)
 eyes = UltrasonicSensor(Port.S1)
 
-running = False
-
-
 # Write your program here.
-ev3.speaker.beep()
+
 
 # Threading: use global variable running and declare your thread code in thread_function.
 running = False
 
-def thread_function(sound, loudness):
+def thread_function1(sound, loudness):
+    """Add code between running = True and running = False. This function sets loudness and plays sound."""
+    global ev3, running
+    running = True
+    # Set speaker loudness and play sound.
+    ev3.speaker.set_volume(loudness)
+    ev3.speaker.play_file(sound)
+    running = False
+
+def thread_function2(sound, loudness):
     """Add code between running = True and running = False. This function sets loudness and plays sound."""
     global ev3, running
     running = True
@@ -38,17 +44,14 @@ def thread_function(sound, loudness):
     running = False
 
 # Create Thread thread and its parameters filename and volume.
-filename = './wwwaaallleee.wav'  # 
+file1 = './wwwaaallleee.wav'  # walle
+file2 = './woah.wav
 volume = 100
-thread = threading.Thread(target=thread_function, args=(filename, volume, ))
+thread1 = threading.Thread(target=thread_function2, args=(file1, volume, ))
+thread2 = threading.Thread(target=thread_function2, args=(file2, volume, ))
 
-# Event loop...
-while True:
-    print(running)
-    # Whenever thread is not running, start it.
-    if not running:
-        thread.start()
-    wait(100000000000000000000000000)
+ev3.speaker.beep()
+thread1.start()
 
 while True:
     distance = eyes.distance()
@@ -57,5 +60,6 @@ while True:
         motor2.run_time(1000, 50, wait=False)
         motor1.run_time(1000, 50, wait=False)
     if ultrasonic.distance() <= 50:
+        thread2.start()
         motor1.stop()
         motor2.stop()
