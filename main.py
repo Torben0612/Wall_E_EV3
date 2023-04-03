@@ -48,10 +48,10 @@ while True:
     distance = eyes.distance()
     distance = int(distance)
     print(distance)
-    if distance >= 200:
-        backmotor.run_time(1000, 200, wait=False)
-        frontmotor.run_time(1000, 200, wait=True)
-    if eyes.distance() <= 50:
+    if distance >= 101:
+        backmotor.run_time(-1500, 150, wait=False)
+        frontmotor.run_time(1000, 150, wait=True)
+    if eyes.distance() <= 1000:
         backmotor.stop()
         frontmotor.stop()
-        drill.run(300)
+        drill.run(500)
