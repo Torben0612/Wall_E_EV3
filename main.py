@@ -36,21 +36,21 @@ def thread_function(sound, loudness):
 
 # Create Thread thread and its parameters filename and volume.
 filename = './wwwaaallleee.wav'  # https://freesound.org/people/Hatayde/sounds/580283/
-volume = 50
+volume = 25
 thread = threading.Thread(target=thread_function, args=(filename, volume, ))
 
 
 
 ev3.speaker.beep()
-#thread.start()
+thread.start()
 
 while True:
     distance = eyes.distance()
     distance = int(distance)
     print(distance)
     if distance >= 101:
-        backmotor.run_time(-1500, 150, wait=False)
-        frontmotor.run_time(1000, 150, wait=True)
+        backmotor.run_time(-500, 1050, wait=False)
+        frontmotor.run_time(500, 1050, wait=True)
     if eyes.distance() <= 1000:
         backmotor.stop()
         frontmotor.stop()
